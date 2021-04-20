@@ -45,6 +45,115 @@ var saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
+$(".list-group").on("click", "p", function() {
+  var text = $(this)
+  .text()
+  .trim();
+  
+
+  var textInput = $("<textarea>")
+  .addClass("form-control")
+  .val(text);
+  $(this).textInput.trigger("focus")
+
+  textInput.trigger(focus)
+});
+
+
+$("list-group").on("blur", "textarea", function() {
+  // get the textarea's current value/text
+var text = $(this)
+.val()
+.trim();
+
+// get the parent ul's id attribute
+var status = $(this)
+.closest(".list-group")
+.attr("id")
+.replace("list-", "");
+
+// get the task's position in the list of other li elements
+var index = $(this)
+.closest(".list-group-item")
+.index();
+
+text = "walk the dog";
+status = "to d0";
+index = 0;
+
+tasks[status][index].text = text;
+saveTasks();
+
+tasks.toDo[0].text = "walk the dog"
+
+//recrete p element
+// recreate p element
+var taskP = $("<p>")
+  .addClass("m-1")
+  .text(text);
+
+// replace textarea with p element
+$(this).replaceWith(taskP);
+
+});
+
+//due date click
+$("list-group").on("click", "span", function() {
+  //get current text
+  var date = $(this)
+  .text ()
+  .trim ();
+
+  //create new input
+  var dateInput = $("<input>")
+  .attr("type", "text")
+  .addClass("form-control")
+  .val(date);
+
+  //swap elements out
+  $(this).replaceWith(dateInput);
+
+  //automatically focus on new element
+  dateInput.trigger("focus");
+
+});
+
+//value of due date was changed
+
+$(".list-group").on("blur", "input[type = 'text']", function () {
+  //get current text
+  var date = $(this)
+  .val ()
+  .trim ();
+
+  //get the parents ul's id attribute
+  var status = $(this)
+  .closest(".list-group")
+  .attr("id")
+  .replace("list-", "");
+
+  //get the tasks's position in the list of other li elemnts
+  var index = $(this)
+  .closest(".list-group-item")
+  .index ();
+
+  //update task in array and re-save to localstorage
+  tasks[status][index].date = date;
+  saveTasks();
+
+  // recreat span element with boostrap classes
+  var taskSpan = $("<span>")
+  .addClass("badge badge-primary badge-pill")
+  .text(date);
+
+  //replace input with span element
+  $(this). replaceWith(taskSpan);
+});
+
+
+
+
+
 
 
 
@@ -80,6 +189,7 @@ $("#task-form-modal .btn-primary").click(function() {
 
     saveTasks();
   }
+  
 });
 
 // remove all tasks
@@ -88,7 +198,9 @@ $("#remove-tasks").on("click", function() {
     tasks[key].length = 0;
     $("#list-" + key).empty();
   }
-  saveTasks();
+  saveTasks();$(".list-group").on("click", "p", function() {
+    console.log("<p> was clicked");
+  })
 });
 
 // load tasks for the first time
